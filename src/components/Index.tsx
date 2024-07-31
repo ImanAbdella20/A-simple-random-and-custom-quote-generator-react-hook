@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 interface Quote {
   text: string;
@@ -39,6 +40,16 @@ const Index = () => {
     setFavorites([...favorites, quote]);
   };
 
+  const deleteFavorite = (index: number) => {
+    setFavorites(favorites.filter((_, i) => i !== index));
+    Swal.fire({
+      title: 'Deleted!',
+      text: 'Quote removed from favorites!',
+      icon: 'warning',
+      confirmButtonText: 'OK'
+    });
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -58,7 +69,10 @@ const Index = () => {
           <h3>Favorites</h3>
           <ul>
             {favorites.map((fav, index) => (
-              <li key={index}>{fav.text} - {fav.author}</li>
+              <li key={index}>
+                {fav.text} - {fav.author}
+                <button onClick={() => deleteFavorite(index)}>X</button>
+              </li>
             ))}
           </ul>
         </div>
