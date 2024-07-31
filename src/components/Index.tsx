@@ -41,12 +41,23 @@ const Index = () => {
   };
 
   const deleteFavorite = (index: number) => {
-    setFavorites(favorites.filter((_, i) => i !== index));
     Swal.fire({
-      title: 'Deleted!',
-      text: 'Quote removed from favorites!',
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this quote?',
       icon: 'warning',
-      confirmButtonText: 'OK'
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFavorites(favorites.filter((_, i) => i !== index));
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Quote removed from favorites!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
     });
   };
 
