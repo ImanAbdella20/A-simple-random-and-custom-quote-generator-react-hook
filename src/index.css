@@ -7,10 +7,17 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(151, 151, 178);
+}
+
+.title{
+  padding-left: 100px;
+  font-weight: bold;
+  font-size: 40px;
 }
 
 .contain {
-  background-color: #fff;
+  background-color: rgb(108, 108, 154);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
