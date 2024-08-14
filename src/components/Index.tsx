@@ -6,16 +6,13 @@ interface Quote {
   author: string;
 }
 
-const Index = () => {
+const Index: React.FC = () => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [quote, setQuote] = useState<Quote>({
     text: "It is only with the heart that one can see rightly, what is essential is invisible to the eye.",
     author: "- Antoine de Saint-Exupery"
   });
-  const [customQuote, setCustomQuote] = useState<Quote>({
-    text: "",
-    author: ""
-  });
+  const [customQuote, setCustomQuote] = useState<Quote>({ text: "", author: "" });
   const [favorites, setFavorites] = useState<Quote[]>([]);
 
   useEffect(() => {
@@ -25,11 +22,19 @@ const Index = () => {
         const data: Quote[] = await response.json();
         setQuotes(data);
       } catch (err) {
-        console.error("Failed to fetch quotes");
+        console.error("Failed to fetch quotes", err);
       }
     };
     loadQuotes();
   }, []);
+
+  useEffect(() => {
+    if (quotes.length > 0) {
+      const today = new Date().getDate();
+      const dailyQuote = quotes[today % quotes.length];
+      setQuote(dailyQuote);
+    }
+  }, [quotes]);
 
   const randomQuote = () => {
     const select = quotes[Math.floor(Math.random() * quotes.length)];
@@ -76,33 +81,31 @@ const Index = () => {
   };
 
   return (
-    <>
-      <div className='contain'>
-        <h2>Random Quote Generator</h2>
-        <p>{quote.text}</p>
-        <p>{quote.author}</p>
-        <button onClick={randomQuote}>New Quote</button>
-        <button onClick={() => addFavorite(quote)}>Add to Favorites</button>
+    <div className='container'>
+       <h2>Quote of the Day</h2>
+      <p>{quote.text}</p>
+      <p>{quote.author}</p>
+      <button onClick={randomQuote}>New Quote</button>
+      <button onClick={() => addFavorite(quote)}>Add to Favorites</button>
 
-        <h2>Custom Quote Generator</h2>
-        <p>{customQuote.text}</p>
-        <p>{customQuote.author}</p>
-        <button onClick={generateCustomQuote}>Generate Custom Quote</button>
-        <button onClick={() => addFavorite(customQuote)}>Add to Favorites</button>
+      <h2>Custom Quote Generator</h2>
+      <p>{customQuote.text}</p>
+      <p>{customQuote.author}</p>
+      <button onClick={generateCustomQuote}>Generate Custom Quote</button>
+      <button onClick={() => addFavorite(customQuote)}>Add to Favorites</button>
 
-        <div>
-          <h3>Favorites</h3>
-          <ul>
-            {favorites.map((fav, index) => (
-              <li key={index}>
-                {fav.text} - {fav.author}
-                <button onClick={() => deleteFavorite(index)}>X</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div>
+        <h3>Favorites</h3>
+        <ul>
+          {favorites.map((fav, index) => (
+            <li key={index}>
+              {fav.text} - {fav.author}
+              <button onClick={() => deleteFavorite(index)}>X</button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
 };
 
