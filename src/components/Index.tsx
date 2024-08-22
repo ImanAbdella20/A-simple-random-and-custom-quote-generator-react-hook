@@ -14,6 +14,7 @@ const Index: React.FC = () => {
   });
   const [customQuote, setCustomQuote] = useState<Quote>({ text: "", author: "" });
   const [favorites, setFavorites] = useState<Quote[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const loadQuotes = async () => {
@@ -35,6 +36,17 @@ const Index: React.FC = () => {
       setQuote(dailyQuote);
     }
   }, [quotes]);
+
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   const randomQuote = () => {
     const select = quotes[Math.floor(Math.random() * quotes.length)];
@@ -80,9 +92,30 @@ const Index: React.FC = () => {
     });
   };
 
+  const editFavorite = (index: number) => {
+    const newQuoteText = prompt("Edit your quote:", favorites[index].text);
+    const newQuoteAuthor = prompt("Edit the author:", favorites[index].author);
+    if (newQuoteText && newQuoteAuthor) {
+      const updatedFavorites = [...favorites];
+      updatedFavorites[index] = { text: newQuoteText, author: newQuoteAuthor };
+      setFavorites(updatedFavorites);
+      Swal.fire({
+        title: 'Updated!',
+        text: 'Quote updated successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
+  const filteredQuotes = quotes.filter(quote =>
+    quote.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quote.author.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className='container'>
-       <h2>Quote of the Day</h2>
+      <h2>Quote of the Day</h2>
       <p>{quote.text}</p>
       <p>{quote.author}</p>
       <button onClick={randomQuote}>New Quote</button>
@@ -100,6 +133,7 @@ const Index: React.FC = () => {
           {favorites.map((fav, index) => (
             <li key={index}>
               {fav.text} - {fav.author}
+              <button onClick={() => editFavorite(index)}>Edit</button>
               <button onClick={() => deleteFavorite(index)}>X</button>
             </li>
           ))}
