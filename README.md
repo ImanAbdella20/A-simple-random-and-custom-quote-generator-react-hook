@@ -1,8 +1,8 @@
-Quote Generator
-Description
+**Quote Generator**
+**Description**
 The Quote Generator is a sophisticated React application that fetches and displays random quotes from an API. Users can view a daily quote, generate random quotes, create custom quotes, and manage their favorite quotes. The application also allows users to edit and delete their favorite quotes.
 
-Table of Contents
+**Table of Contents**
 Installation
 
 Usage
@@ -17,7 +17,7 @@ Credits
 
 Contact
 
-Installation
+**Installation**
 To set up the project locally, follow these steps:
 
 Clone the repository:
@@ -36,7 +36,8 @@ Start the project:
 
 bash
 npm run dev
-Usage
+
+**Usage**
 After setting up the project, you can use the application as follows:
 
 View the Quote of the Day: The application displays a daily quote fetched from an API.
@@ -47,7 +48,7 @@ Create Custom Quotes: Use the "Generate Custom Quote" button to create and displ
 
 Manage Favorites: Add quotes to your favorites, edit them, or delete them as needed.
 
-Features
+**Features**
 Daily Quote: Displays a new quote every day.
 
 Random Quote Generator: Fetches and displays random quotes from an API.
@@ -58,7 +59,7 @@ Favorites Management: Users can add, edit, and delete their favorite quotes.
 
 Local Storage: Favorites are saved in local storage for persistence.
 
-Contributing
+**Contributing**
 We welcome contributions! Please adhere to the following steps to contribute:
 
 Fork the repository:
@@ -112,10 +113,10 @@ Submit your pull request for review.
 
 We appreciate your contributions and will review your pull request as soon as possible.
 
-License
+**License**
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Credits
+**Credits**
 Iman Abdella - Project Creator
 
 SweetAlert2 - For the alert dialogs
